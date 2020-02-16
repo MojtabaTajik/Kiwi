@@ -1,0 +1,23 @@
+﻿.footer {
+    bottom: 0;
+    color: #707070;
+    height: 2em;
+    left: 0;
+    position: static;
+    font-size: small;
+    width: 100%;
+}
+
+.rowFlex {
+    display: flex;
+    flex-direction: row;
+}
+
+.columnFlex {
+    display: flex;
+    flex-direction: row;
+}
+
+.rightFloat {
+    float: right;
+}

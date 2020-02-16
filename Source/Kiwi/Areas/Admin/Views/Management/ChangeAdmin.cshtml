@@ -1,0 +1,66 @@
+﻿@model Model.Entities.Account.Login
+
+@{
+    ViewData["Title"] = "Change Admin";
+}
+
+<div class="container">
+    <h1>@ViewData["Title"]</h1>
+    <hr />
+
+    <div class="row">
+        <div class="col-md-4">
+
+            <form asp-action="ChangeAdmin">
+                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+                <div class="form-group">
+                    <label asp-for="UserName"></label>
+                    <input asp-for="UserName" class="form-control" autofocus required placeholder="Username" />
+                    <span asp-validation-for="UserName" class="text-danger"></span>
+                </div>
+
+                <div class="form-group">
+                    <label asp-for="CurrentPassword"></label>
+                    <input asp-for="CurrentPassword" class="form-control" required placeholder="Current Password" />
+                    <span asp-validation-for="CurrentPassword" class="text-danger"></span>
+                </div>
+
+                <div class="form-group">
+                    <label asp-for="Password"></label>
+                    <input asp-for="Password" id="password" class="form-control" required placeholder="Password" />
+                    <span asp-validation-for="Password" class="text-danger"></span>
+                </div>
+
+                <div class="form-group">
+                    <label>Retype new password</label>
+                    <input type="password" class="form-control" required placeholder="Retype Password" oninput="check(this)" />
+                </div>
+
+                @Html.HiddenFor(model => model.ID)
+
+                <div class="form-group">
+                    <a class="btn btn-warning" asp-controller="Management" asp-action="Index">Back</a>
+                    <input type="submit" value="Save" class="btn btn-primary" />
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+@section Scripts
+{
+    <script>
+        $("h1").addClass("text text-info");
+        $("span").css("font-weight", "Bold")
+
+        function check(input) {
+            if (input.value != document.getElementById('password').value) {
+                input.setCustomValidity('Password Must be Matching.');
+            } else {
+                // input is valid -- reset the error message
+                input.setCustomValidity('');
+            }
+        }
+    </script>
+}

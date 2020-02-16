@@ -1,0 +1,89 @@
+﻿@model Model.Entities.Blog.BlogInfo
+
+@{
+    ViewData["Title"] = "Edit blog information";
+}
+
+<div id="EditBlogInfo" class="container">
+    <h1>@ViewData["Title"]</h1>
+    <hr />
+
+    <dl>
+        <form class="row" asp-action="EditBlogInfo">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+            <div class="input-group mb-2">
+                <div class="input-group-prepend">
+                    <span class="input-group-text" id="inputGroup-sizing-default">@nameof(Model.Title)</span>
+                </div>
+                <input type="text" class="form-control" asp-for="Title">
+                <span asp-validation-for="Title" class="text-danger"></span>
+            </div>
+
+            <div class="input-group mb-2">
+                <div class="input-group-prepend">
+                    <span class="input-group-text">@nameof(Model.Description)</span>
+                </div>
+                <input type="text" class="form-control" asp-for="Description">
+                <span asp-validation-for="Description" class="text-danger"></span>
+            </div>
+
+            <div class="input-group mb-2">
+                <div class="input-group-prepend">
+                    <span class="input-group-text">https://github.com/</span>
+                </div>
+                <input type="text" class="form-control" asp-for="GithubUsername">
+                <span asp-validation-for="GithubUsername" class="text-danger"></span>
+            </div>
+
+            <div class="input-group mb-2">
+                <div class="input-group-prepend">
+
+                    <span class="input-group-text">https://twitter.com/</span>
+                </div>
+                <input type="text" class="form-control" asp-for="TwitterUsername">
+                <span asp-validation-for="TwitterUsername" class="text-danger"></span>
+            </div>
+
+            <div class="input-group mb-2">
+                <div class="input-group-prepend">
+                    <span class="input-group-text">https://linkedin.com/in/</span>
+                </div>
+                <input type="text" class="form-control" asp-for="LinkedInUsername">
+                <span asp-validation-for="LinkedInUsername" class="text-danger"></span>
+            </div>
+
+            <div class="input-group mb-2">
+                <div class="input-group-prepend">
+                    <span class="input-group-text">https://t.me/</span>
+                </div>
+                <input type="text" class="form-control" asp-for="TelegramUsername">
+                <span asp-validation-for="TelegramUsername" class="text-danger"></span>
+            </div>
+
+            <div class="input-group">
+                <div class="input-group-prepend">
+                    <span class="input-group-text">@nameof(Model.About)</span>
+                </div>
+                <textarea class="form-control" asp-for="About">@Model.About</textarea>
+                <span asp-validation-for="About" class="text-danger"></span>
+            </div>
+
+            @Html.HiddenFor(model => model.ID)
+
+            <div class="form-group">
+                <br />
+                <a class="btn btn-warning" asp-controller="Management" asp-action="BlogInfo">Back to List</a>
+                <input type="submit" value="Save" class="btn btn-primary" />
+            </div>
+        </form>
+    </dl>
+</div>
+
+@section Scripts
+{
+    <script>
+        $("h1").addClass("text text-info");
+        $("span").css("font-weight","Bold");
+    </script>
+}

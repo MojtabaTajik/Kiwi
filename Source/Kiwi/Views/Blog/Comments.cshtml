@@ -1,0 +1,74 @@
+﻿@model Model.Entities.Blog.Post
+@inject IOptionsSnapshot<BlogSettings> Settings
+
+    <section id="comments">
+        <div class="container">
+            <h2>Comments</h2>
+            @foreach (var comment in Model.Comments)
+            {
+                <article id="@comment.ID" class="@(comment.IsAdmin ? "admin" : null)" itemprop="comment" itemscope itemtype="http://schema.org/Comment">
+                    <h3>
+                        <time datetime="@comment.PubDate.ToString("s")" itemprop="datePublished">
+                            <a class="badge badge-warning">@comment.PubDate.ToString("MMMM d, yyyy")</a>
+                        </time>
+                    </h3>
+
+                    <div class="card">
+                        <h5 class="card-header">
+                            <img class="rounded-circle" src="data:image/gif;base64,R0lGODlhAQABAIAAAP///wAAACH5BAEAAAAALAAAAAABAAEAAAICRAEAOw==" data-src="@comment.GetGravatar()" />
+
+                            <span class="badge badge-warning" itemprop="name">@comment.Author</span>
+
+                            @if (User.Identity.IsAuthenticated)
+                            {
+                                <a class="badge badge-info" href="mailto:@comment.Email" title="Send email to @comment.Email">@comment.Email</a>
+                                <a class="btn btn-danger delete" asp-controller="Blog" asp-Action="DeleteComment" asp-route-postid="@Model.ID" asp-route-commentid="@comment.ID" asp-route-afrt="@ViewData["afrt"]">X</a>
+                            }
+                        </h5>
+                        <div class="card-body">
+                            <p class="card-text">@comment.RenderContent()</p>
+                        </div>
+                    </div>
+                </article>
+            }
+
+            @if (Model.AreCommentsOpen(Settings.Value.CommentsCloseAfterDays))
+            {
+                if (Model.Comments.Count == 0)
+                {
+                    <p>Be the first to post a comment</p>
+                }
+
+                <form method="post" asp-controller="Blog" asp-action="AddComment" asp-route-postid="@Model.ID" asp-antiforgery="false">
+                    <h3 class="badge badge-info">Post a comment</h3>
+
+                    <label for="content">Comment</label>
+                    <textarea id="content" name="content" rows="5" cols="100" onfocus="" required placeholder="Enter your comment here..."></textarea>
+
+                    <div class="details">
+                        <label for="author">Name</label>
+                        <input id="author" name="author" placeholder="Your name" required />
+
+                        <label for="email">E-mail</label>
+                        <input id="email" name="email" placeholder="Example: mary@outlook.com" required />
+                        <br />
+
+                        <input type="submit" value="Post comment" />
+
+                        <!-- This element is being removed by site.js. It is to prevent comment spam-->
+                        <input type="hidden" name="website" />
+                    </div>
+                </form>
+
+                <noscript>
+                    <br />
+                    <p>Enable JavaScript to post comments on this blog.</p>
+                </noscript>
+            }
+            else
+            {
+                <br />
+                <p>Comments are closed</p>
+            }
+        </div>
+    </section>

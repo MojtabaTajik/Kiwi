@@ -1,0 +1,57 @@
+﻿@inject IOptionsSnapshot<BlogSettings> Settings
+
+<!DOCTYPE html>
+<html lang="en">
+<head prefix="og: http://ogp.me/ns#">
+
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="description" content="@ViewData["Description"]" />
+
+    <title>@ViewData["Title"]</title>
+
+    <!--Open Graph Metadata-->
+    <meta property="og:type" content="article" />
+    <meta property="og:title" content="@ViewData["Title"]" />
+    <meta property="og:description" content="@ViewData["Description"]" />
+    <meta property="og:url" content="@("https://" + Context.Request.Host + Context.Request.Path)" />
+
+    <link rel="icon" type="image/png" href="~/img/fav.png" />
+
+    <!-- Imports -->
+    <script src="~/js/site.js"></script>
+
+    <link href="~/lib/font-awesome/css/all.css" rel="stylesheet" />
+    <link href="~/css/belowthefold.scss" rel="stylesheet" />
+    <link href="~/css/abovethefold.scss" rel="stylesheet" />
+    <link href="~/css/sidebar.css" rel="stylesheet">
+ 
+    <!-- Sections -->
+    @RenderSection("Preload", required: false)
+    @RenderSection("Head", required: false)
+</head>
+
+<body>
+<div class="wrapper d-flex align-items-stretch">
+
+    @await Component.InvokeAsync("Sidebar")
+
+    <!-- Page Content  -->
+    <div id="content" class="p-4 p-md-5 pt-5">
+        @RenderBody()
+    </div>
+</div>
+
+<!-- This lazy loads the stylesheet in a non-render blocking way -->
+<link href="~/lib/twitter-bootstrap/css/bootstrap.css" rel="stylesheet" />
+
+<script src="~/lib/jquery/jquery.js"></script>
+<script src="~/lib/twitter-bootstrap/js/bootstrap.min.js"></script>
+<script src="~/js/site.js" async defer></script>
+<script src="~/js/popper.js"></script>
+<script src="~/js/main.js"></script>
+
+@RenderSection("Scripts", required: false)
+
+</body>
+</html>

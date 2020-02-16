@@ -1,0 +1,45 @@
+﻿@{
+    ViewData["Title"] = "Management";
+}
+
+
+    <div id="Management" class="container">
+        <h1>@ViewData["Title"]</h1>
+        <hr />
+        
+        <div id="ManageItems">
+            <a asp-controller="Blog" asp-action="Edit">New Post</a>
+            <br />
+            <a asp-controller="Management" asp-action="BlogInfo">Blog Information</a>
+            <br />
+            <a asp-controller="Management" asp-action="ExportVisitors">Export visitors</a>
+            <br />
+            <a asp-controller="Management" asp-action="Backup">Backup</a>
+            <br />
+            <a asp-controller="Management" asp-action="ChangeAdmin">Login</a>
+            <br />
+            <br />
+        </div>
+
+        <div class="card">
+            <div class="card-header">
+                <h6 id="Restore">Restore</h6>
+            </div>
+            <div class="card-body">
+                <form method="post" enctype="multipart/form-data" asp-controller="Management" asp-action="Restore">
+                    <input type="file" name="databaseFile" />
+                    <button type="submit" class="btn btn-danger">Restore</button>
+                </form>
+                <br />
+                <h6 class="text text-danger">Note: By restoring the database, current data will be lost.</h6>
+            </div>
+        </div>
+    </div>
+
+@section Scripts
+{
+    <script>
+        $("h1").addClass("text text-info").css("font-weight", "bold");
+        $("#ManageItems .A").addClass("text text-primary").css("font-weight", "bold");
+    </script>
+}

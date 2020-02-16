@@ -1,0 +1,39 @@
+﻿@model Model.Entities.Account.Login
+@{
+    ViewData["Title"] = "Login";
+    ViewData["Description"] = "Sign in to the website";
+}
+
+@section head {
+    <link rel="stylesheet" href="~/css/login.scss" />
+}
+
+<div class="container">
+    <h1>@ViewData["Title"]</h1>
+    <hr />
+
+    <div class="col-md-4">
+        <form method="post" id="login" aria-labelledby="legend" asp-route-returnUrl="@ViewData["ReturnUrl"]">
+            <div asp-validation-summary="All"></div>
+            <fieldset>
+                <input asp-for="UserName" aria-label="Username" autofocus required placeholder="Username" />
+                <input asp-for="Password" aria-label="Password" required placeholder="Password" />
+
+                <input asp-for="RememberMe" />
+                <label asp-for="RememberMe">Remember me</label>
+
+                <input type="hidden" name="ID" value="0" />
+
+                <input type="submit" value="Sign in" class="btn btn-primary" />
+            </fieldset>
+        </form>
+    </div>
+</div>
+
+@section Scripts
+{
+    <script>
+        $("h1").addClass("text text-info");
+        $("span").css("font-weight","Bold");
+    </script>
+}

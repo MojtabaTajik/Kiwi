@@ -1,0 +1,84 @@
+﻿@model Model.Entities.Blog.Post
+@inject IOptionsSnapshot<BlogSettings> Settings
+
+@{
+    ViewData["Title"] = Model.Title;
+    ViewData["Description"] = Model.Excerpt;
+    bool showFullPost = ViewContext.RouteData.Values.ContainsKey("slug");
+    string host = Context.Request.Scheme + "://" + Context.Request.Host;
+    bool isCodePreview = Model.Content.Contains("</code>");
+}
+
+@section Head {
+    <link rel="canonical" href="@(host + Model.GetLink())" />
+}
+
+<article class="post container" itemscope itemtype="http://schema.org/BlogPosting" itemprop="blogPost">
+    <header>
+        <h4 itemprop="name headline"><a class="text text-primary" href="@Model.GetLink()" rel="canonical" itemprop="url">@Model.Title</a></h4>
+        <br/>
+        <time class="badge badge-warning" datetime="@Model.PubDate.ToString("s")" itemprop="datePublished">Published @Model.PubDate.ToString("D")</time>
+        
+        <a class="badge badge-info" href="@Model.GetLink()#comments" itemprop="discussionUrl" title="Go to the comments section">
+            @Model.Comments.Count @(Model.Comments.Count == 1 ? "comment" : "comments")
+        </a>
+    </header>
+
+        <div itemprop="articleBody mainEntityOfPage" cdnify>
+            @if (showFullPost || Settings.Value.ListView == PostListView.FullPosts)
+            {
+                @Html.Raw(Model.RenderContent())
+            }
+            else if (Settings.Value.ListView == PostListView.TitlesAndExcerpts)
+            {
+                @Html.Raw(Model.Excerpt)
+            }
+        </div>
+
+    <footer>
+            @if (Model.Categories.Any())
+            {
+                <ul class="categories">
+                    @foreach (string cat in Model.Categories)
+                    {
+                        <a class="badge badge-danger" asp-controller="Blog" asp-action="Category" asp-route-category="@cat.ToLowerInvariant()" asp-route-page="">
+                            @cat
+                        </a>
+                    }
+                </ul>
+
+                @if (User.Identity.IsAuthenticated)
+                 {
+                     <a class="btn btn-warning" style="float: right" asp-controller="Blog" asp-action="edit" asp-route-id="@Model.ID">Edit post</a>
+                 }
+            }
+
+                        <meta itemprop="author" content="@Settings.Value.Owner" />
+                        <meta itemprop="dateModified" content="@Model.LastModified.ToString("s")" />
+                        <meta itemprop="mainEntityOfPage" content="@(host + Model.GetLink())" />
+                </footer>
+    </article>
+
+    @if (showFullPost)
+    {
+        await Html.RenderPartialAsync("Comments");
+
+        @section Preload {
+            @* This lazy loads the stylesheet in a non-render blocking way *@
+            <link href="~/css/comments.scss" as="style" />
+            <noscript><link rel="stylesheet" href="~/css/comments.scss" /></noscript>
+            @if (isCodePreview)
+            {
+                <link href="~/lib/prism/prism.scss" as="style" />
+                <script src="~/lib/prism/prism.js" async defer></script>
+            }
+        }
+    }
+
+    @if (User.Identity.IsAuthenticated)
+    {
+        @section Scripts {
+            <script src="~/js/admin.js" async defer></script>
+            <link rel="stylesheet" href="~/css/admin.scss" />
+        }
+    }

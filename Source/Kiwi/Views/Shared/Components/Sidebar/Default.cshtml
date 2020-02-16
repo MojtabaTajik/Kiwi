@@ -1,0 +1,50 @@
+﻿@using System.Diagnostics
+@model IEnumerable<string>
+
+<nav id="sidebar">
+    <div class="custom-menu">
+        <button type="button" id="sidebarCollapse" class="btn btn-primary">
+            <i class="fa fa-bars"></i>
+            <span class="sr-only">Toggle Menu</span>
+        </button>
+    </div>
+    <div class="p-4">
+        @await Component.InvokeAsync("BlogInfo")
+
+        <ul class="list-unstyled components mb-5">
+            <li class="active">
+                <a asp-controller="Blog" asp-action=""><span class="fa fa-home fa-2x"></span>  Home</a>
+            </li>
+
+            <li>
+                <a asp-controller="Blog" asp-action="About"><span class="fas fa-address-card fa-2x"></span>  About</a>
+            </li>
+
+            @foreach (string cat in Model)
+            {
+        <li>
+            <a asp-controller="Blog" asp-action="Category" asp-route-category="@cat.ToLowerInvariant()"><span class="fa fa-tag fa-2x"></span>  @cat.ToLowerInvariant()</a>
+        </li>
+            }
+
+            @if (User.Identity.IsAuthenticated)
+            {
+                <li>
+                    <a asp-area="Admin" asp-controller="Management" asp-action="Index"><span class="fa fa-crown fa-2x"></span>  Management</a>
+                </li>
+
+                <li>
+                    <a asp-controller="Account" asp-action="logout"><span class="fas fa-sign-out-alt fa-2x"></span>  Sign out</a>
+                </li>
+            }
+        </ul>
+
+        @{
+            string version = FileVersionInfo.GetVersionInfo(System.Reflection.Assembly.GetExecutingAssembly().Location).FileVersion;
+        }
+
+        <div id="aboutKiwi">
+            <a id="KiwiLink" href="https://github.com/MojtabaTajik/Kiwi" target="_blank" style="color: white"><img src="~/img/kiwi.png" /> Kiwi @version</a>
+        </div>
+    </div>
+</nav>
