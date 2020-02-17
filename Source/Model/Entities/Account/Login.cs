@@ -6,7 +6,10 @@ namespace Model.Entities.Account
 {
     public class Login : BaseEntity
     {
-        [Required] [DisplayName("Username")] public string UserName { get; set; }
+        [Required] 
+        [DisplayName("Username")] 
+        [MinLength(4)]
+        public string UserName { get; set; }
 
         [Required]
         [DataType(DataType.Password)]
