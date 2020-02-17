@@ -20,13 +20,6 @@
                 <a asp-controller="Blog" asp-action="About"><span class="fas fa-address-card fa-2x"></span>  About</a>
             </li>
 
-            @foreach (string cat in Model)
-            {
-        <li>
-            <a asp-controller="Blog" asp-action="Category" asp-route-category="@cat.ToLowerInvariant()"><span class="fa fa-tag fa-2x"></span>  @cat.ToLowerInvariant()</a>
-        </li>
-            }
-
             @if (User.Identity.IsAuthenticated)
             {
                 <li>
@@ -37,10 +30,20 @@
                     <a asp-controller="Account" asp-action="logout"><span class="fas fa-sign-out-alt fa-2x"></span>  Sign out</a>
                 </li>
             }
+            
+            <div id="tags">
+                <br/>
+                @foreach (string cat in Model)
+                {
+                    <a class="badge badge-warning" asp-controller="Blog" asp-action="Category" asp-route-category="@cat.ToLowerInvariant()" asp-route-page="">
+                        @cat
+                    </a>
+                }
+            </div>
         </ul>
 
         @{
-            string version = FileVersionInfo.GetVersionInfo(System.Reflection.Assembly.GetExecutingAssembly().Location).FileVersion;
+            string version = "1.6.0";// FileVersionInfo.GetVersionInfo(System.Reflection.Assembly.GetExecutingAssembly().Location).FileVersion;
         }
 
         <div id="aboutKiwi">
