@@ -32,7 +32,7 @@
                 </article>
             }
 
-            @if (Model.AreCommentsOpen(Settings.Value.CommentsCloseAfterDays))
+            @if (Model.CloseComments == false)
             {
                 if (Model.Comments.Count == 0)
                 {
@@ -68,7 +68,7 @@
             else
             {
                 <br />
-                <p>Comments are closed</p>
+                <p class="text text-danger">Comments are closed</p>
             }
         </div>
     </section>

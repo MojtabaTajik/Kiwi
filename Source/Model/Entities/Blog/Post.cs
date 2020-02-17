@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Text.RegularExpressions;
+using System.Threading.Tasks;
 
 namespace Model.Entities.Blog
 {
@@ -26,14 +27,11 @@ namespace Model.Entities.Blog
 
         public IList<Comment> Comments { get; set; } = new List<Comment>();
 
+        public bool CloseComments { get; set; }
+
         public string GetLink()
         {
             return $"/blog/{ID}";
-        }
-
-        public bool AreCommentsOpen(int commentsCloseAfterDays)
-        {
-            return PubDate.AddDays(commentsCloseAfterDays) >= DateTime.UtcNow;
         }
 
         public string RenderContent()

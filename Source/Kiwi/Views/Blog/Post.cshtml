@@ -62,6 +62,7 @@
     @if (showFullPost)
     {
         await Html.RenderPartialAsync("Comments");
+        
 
         @section Preload {
             @* This lazy loads the stylesheet in a non-render blocking way *@

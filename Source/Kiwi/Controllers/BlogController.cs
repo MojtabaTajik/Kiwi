@@ -132,6 +132,7 @@ namespace Kiwi.Controllers
             existing.IsPublished = post.IsPublished;
             existing.Content = post.Content.Trim();
             existing.Excerpt = post.Excerpt.Trim();
+            existing.CloseComments = post.CloseComments;
 
             await SaveFilesToDisk(existing);
 
@@ -205,7 +206,7 @@ namespace Kiwi.Controllers
                 return View("Post", post);
             }
 
-            if (post == null || !post.AreCommentsOpen(_settings.Value.CommentsCloseAfterDays))
+            if (post == null)
             {
                 return NotFound();
             }
