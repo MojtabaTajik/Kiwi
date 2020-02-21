@@ -22,7 +22,7 @@ namespace Kiwi.Middlewares
         {
             await _next(context);
 
-            string requestedResourceExtension = Path.GetExtension(context.Request.Path);
+            string requestedResourceExtension = Path.GetExtension(context.Request.Path).ToLower();
             var allowedExtensions = settings.Value.ValidUploadExtensions;
 
             if (allowedExtensions.Contains(requestedResourceExtension))
