@@ -1,4 +1,5 @@
-﻿using Data.Services.Blog;
+﻿using System;
+using Data.Services.Blog;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Options;
 using Model.Entities.Blog;
@@ -6,6 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Xml;
+using Kiwi.Infrastructure.Sitemap;
 
 namespace Kiwi.Controllers
 {
@@ -34,31 +36,24 @@ namespace Kiwi.Controllers
         }
 
         [Route("/sitemap.xml")]
-        public async Task SitemapXml()
+        public async Task<ActionResult> SitemapAsync()
         {
-            string host = Request.Scheme + "://" + Request.Host;
+            string baseUrl = $"{Request.Scheme}://{Request.Host}";
 
-            Response.ContentType = "application/xml";
+            var siteMapBuilder = new SitemapBuilder();
 
-            using (var xml = XmlWriter.Create(Response.Body, new XmlWriterSettings { Indent = true }))
+            // add the home page
+            siteMapBuilder.AddUrl(baseUrl, modified: DateTime.UtcNow, changeFrequency: ChangeFrequency.Weekly, priority: 1.0);
+
+            // add blog posts
+            var posts = await _blog.GetPosts();
+            foreach (var post in posts)
             {
-                xml.WriteStartDocument();
-                xml.WriteStartElement("urlset", "http://www.sitemaps.org/schemas/sitemap/0.9");
-
-                var posts = await _blog.GetPosts(int.MaxValue);
-
-                foreach (Post post in posts)
-                {
-                    var lastMod = new[] { post.PubDate, post.LastModified };
-
-                    xml.WriteStartElement("url");
-                    xml.WriteElementString("loc", host + post.GetLink());
-                    xml.WriteElementString("lastmod", lastMod.Max().ToString("yyyy-MM-ddThh:mmzzz"));
-                    xml.WriteEndElement();
-                }
-
-                xml.WriteEndElement();
+                string postUrl = $"{baseUrl}/blog/{post.ID}";
+                siteMapBuilder.AddUrl(postUrl, modified: post.LastModified, changeFrequency: null, priority: 0.9);
             }
+
+            return Content(siteMapBuilder.ToString(), "text/xml");
         }
     }
 }
