@@ -25,7 +25,7 @@ namespace Data.Services.Blog
 
         Task DeletePost(Post post);
 
-        string SaveFile(byte[] bytes, string extension);
+        string SaveFile(byte[] bytes, string extension, string id = "");
 
         byte[] RetrieveFile(string fileName);
 

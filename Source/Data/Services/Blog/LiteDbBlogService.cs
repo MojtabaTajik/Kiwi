@@ -139,9 +139,9 @@ namespace Data.Services.Blog
             return taskResult;
         }
 
-        public string SaveFile(byte[] bytes, string extension)
+        public string SaveFile(byte[] bytes, string extension, string id = "")
         {
-            string fileId = $"{Guid.NewGuid().ToString()}{extension}";
+            string fileId = string.IsNullOrEmpty(id) ? $"{Guid.NewGuid().ToString()}{extension}" : $"{id}";
 
             using var ms = new MemoryStream(bytes);
             _liteDatabase.FileStorage.Upload(fileId, fileId, ms);
