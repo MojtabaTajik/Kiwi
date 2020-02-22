@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Mvc;
 using Model.Entities.Account;
 using Model.Entities.Blog;
 using System.IO;
+using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Data;
@@ -27,6 +28,14 @@ namespace Kiwi.Areas.Admin.Controllers
         public IActionResult Index()
         {
             return View();
+        }
+
+        public async Task<IActionResult> Drafts()
+        {
+            var posts = await _blog.GetPosts();
+            var drafts = posts.Where(w => w.IsPublished == false);
+
+            return View(drafts);
         }
 
         public async Task<IActionResult> BlogInfo()

@@ -26,19 +26,20 @@ namespace Kiwi.Controllers
         [OutputCache(Profile = "default")]
         public async Task<IActionResult> Index([FromRoute]int page = 0)
         {
-            // get published posts.
+            // get published posts
             var posts = await _blog.GetPosts();
+            var publishedPosts = posts.ToList().Where(w => w.IsPublished == true);
 
             // Get blog info
             var blogInfo = await _blog.GetBlogInfo();
 
-            // apply paging filter.
-            var filteredPosts = posts.Skip(_settings.Value.PostsPerPage * page).Take(_settings.Value.PostsPerPage);
+            // apply paging filter
+            var filteredPosts = publishedPosts.Skip(_settings.Value.PostsPerPage * page).Take(_settings.Value.PostsPerPage);
 
             // set the view option
             ViewData["ViewOption"] = _settings.Value.ListView;
 
-            ViewData["TotalPostCount"] = posts.Count();
+            ViewData["TotalPostCount"] = publishedPosts.Count();
             ViewData["Title"] = blogInfo.Title;
             ViewData["Description"] = blogInfo.Description;
             ViewData["prev"] = $"/{page + 1}/";

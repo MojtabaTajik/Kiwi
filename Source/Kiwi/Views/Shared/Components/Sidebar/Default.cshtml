@@ -1,5 +1,4 @@
-﻿@using System.Diagnostics
-@model IEnumerable<string>
+﻿@model IEnumerable<string>
 
 <nav id="sidebar">
     <div class="custom-menu">
@@ -16,12 +15,12 @@
                 <a asp-controller="Blog" asp-action=""><span class="fa fa-home fa-2x"></span>  Home</a>
             </li>
 
-            <li>
-                <a asp-controller="Blog" asp-action="About"><span class="fas fa-address-card fa-2x"></span>  About</a>
-            </li>
-
             @if (User.Identity.IsAuthenticated)
             {
+                <li>
+                    <a asp-area="Admin" asp-controller="Management" asp-action="Drafts"><span class="fa fa-pen fa-2x"></span>  Drafts</a>
+                </li>
+
                 <li>
                     <a asp-area="Admin" asp-controller="Management" asp-action="Index"><span class="fa fa-crown fa-2x"></span>  Management</a>
                 </li>
@@ -30,9 +29,13 @@
                     <a asp-controller="Account" asp-action="logout"><span class="fas fa-sign-out-alt fa-2x"></span>  Sign out</a>
                 </li>
             }
-            
+
+            <li>
+                <a asp-controller="Blog" asp-action="About"><span class="fas fa-address-card fa-2x"></span>  About</a>
+            </li>
+
             <div id="tags">
-                <br/>
+                <br />
                 @foreach (string cat in Model)
                 {
                     <a class="badge badge-warning" asp-controller="Blog" asp-action="Category" asp-route-category="@cat.ToLowerInvariant()" asp-route-page="">
