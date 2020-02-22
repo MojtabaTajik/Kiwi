@@ -8,57 +8,67 @@
     <h1>@ViewData["Title"]</h1>
     <hr />
 
-    <dl class="row">
-        <div class="input-group mb-2">
-            <div class="input-group-prepend">
-                <span class="input-group-text">@nameof(Model.Title)</span>
-            </div>
-            <input type="text" class="form-control" asp-for="Title" readonly="">
-        </div>
+    <table class="table">
+        <tbody>
+        <th>
 
-        <div class="input-group mb-2">
-            <div class="input-group-prepend">
-                <span class="input-group-text">@nameof(Model.Description)</span>
-            </div>
-            <input type="text" class="form-control" asp-for="Description" readonly="">
-        </div>
+            <dl class="row">
+                <div class="input-group mb-2">
+                    <div class="input-group-prepend">
+                        <span class="input-group-text">@nameof(Model.Title)</span>
+                    </div>
+                    <input type="text" class="form-control" asp-for="Title" readonly="">
+                </div>
 
-        <div class="input-group mb-2">
-            <div class="input-group-prepend">
-                <span class="input-group-text">https://github.com/</span>
-            </div>
-            <input type="text" class="form-control" asp-for="GithubUsername" readonly="">
-        </div>
+                <div class="input-group mb-2">
+                    <div class="input-group-prepend">
+                        <span class="input-group-text">@nameof(Model.Description)</span>
+                    </div>
+                    <input type="text" class="form-control" asp-for="Description" readonly="">
+                </div>
 
-        <div class="input-group mb-2">
-            <div class="input-group-prepend">
-                <span class="input-group-text">https://twitter.com/</span>
-            </div>
-            <input type="text" class="form-control" asp-for="TwitterUsername" readonly="">
-        </div>
+                <div class="input-group mb-2">
+                    <div class="input-group-prepend">
+                        <span class="input-group-text">https://github.com/</span>
+                    </div>
+                    <input type="text" class="form-control" asp-for="GithubUsername" readonly="">
+                </div>
 
-        <div class="input-group mb-2">
-            <div class="input-group-prepend">
-                <span class="input-group-text">https://linkedin.com/in/</span>
-            </div>
-            <input type="text" class="form-control" asp-for="LinkedInUsername" readonly="">
-        </div>
+                <div class="input-group mb-2">
+                    <div class="input-group-prepend">
+                        <span class="input-group-text">https://twitter.com/</span>
+                    </div>
+                    <input type="text" class="form-control" asp-for="TwitterUsername" readonly="">
+                </div>
 
-        <div class="input-group mb-2">
-            <div class="input-group-prepend">
-                <span class="input-group-text" id="inputGroup-sizing-default">https://t.me/</span>
-            </div>
-            <input type="text" class="form-control" asp-for="TelegramUsername" readonly="">
-        </div>
+                <div class="input-group mb-2">
+                    <div class="input-group-prepend">
+                        <span class="input-group-text">https://linkedin.com/in/</span>
+                    </div>
+                    <input type="text" class="form-control" asp-for="LinkedInUsername" readonly="">
+                </div>
 
-        <div class="input-group mb-2">
-            <div class="input-group-prepend">
-                <span class="input-group-text">@nameof(Model.About)</span>
-            </div>
-            <textarea class="form-control" readonly="">@Model.About</textarea>
-        </div>
-    </dl>
-    
+                <div class="input-group mb-2">
+                    <div class="input-group-prepend">
+                        <span class="input-group-text" id="inputGroup-sizing-default">https://t.me/</span>
+                    </div>
+                    <input type="text" class="form-control" asp-for="TelegramUsername" readonly="">
+                </div>
+
+                <div class="input-group mb-2">
+                    <div class="input-group-prepend">
+                        <span class="input-group-text">@nameof(Model.About)</span>
+                    </div>
+                    <textarea class="form-control" readonly="">@Model.About</textarea>
+                </div>
+            </dl>
+        </th>
+        <th>
+            <img class="rounded border border-dark" src="@Model.AvatarId" />
+        </th>
+        </tbody>
+    </table>
+
     <div>
         <a class="btn btn-warning" asp-controller="Management" asp-action="Index">Back</a>
         <a class="btn btn-success" asp-controller="Management" asp-action="EditBlogInfo" asp-route-id="@Model.ID">Edit</a>

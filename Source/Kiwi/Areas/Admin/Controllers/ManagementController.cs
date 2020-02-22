@@ -54,7 +54,21 @@ namespace Kiwi.Areas.Admin.Controllers
         [HttpPost]
         public async Task<IActionResult> EditBlogInfo(BlogInfo blogInfo)
         {
-            await _blog.SetBlogInfo(blogInfo);
+            var files = HttpContext.Request.Form.Files;
+            if (files.Any())
+            {
+                var avatarInfo = files[0];
+
+                string avatarExtension = Path.GetExtension(avatarInfo.FileName);
+
+                await using var ms = new MemoryStream();
+                avatarInfo.CopyTo(ms);
+
+                blogInfo.AvatarId = _blog.SaveFile(ms.ToArray(), avatarExtension, blogInfo.AvatarId);
+            }
+
+            bool setBlogInfoResult = await _blog.SetBlogInfo(blogInfo);
+
             return RedirectToAction("BlogInfo");
         }
 

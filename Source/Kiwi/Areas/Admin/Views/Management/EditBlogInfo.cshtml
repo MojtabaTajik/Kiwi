@@ -9,8 +9,11 @@
     <hr />
 
     <dl>
-        <form class="row" asp-action="EditBlogInfo">
+        <form class="row" enctype="multipart/form-data" asp-action="EditBlogInfo">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+            @Html.HiddenFor(model => model.ID)
+            @Html.HiddenFor(model => model.AvatarId)
 
             <div class="input-group mb-2">
                 <div class="input-group-prepend">
@@ -61,7 +64,7 @@
                 <span asp-validation-for="TelegramUsername" class="text-danger"></span>
             </div>
 
-            <div class="input-group">
+            <div class="input-group mb-2">
                 <div class="input-group-prepend">
                     <span class="input-group-text">@nameof(Model.About)</span>
                 </div>
@@ -69,7 +72,14 @@
                 <span asp-validation-for="About" class="text-danger"></span>
             </div>
 
-            @Html.HiddenFor(model => model.ID)
+            <div class="input-group mb-2">
+                <div class="input-group-prepend">
+                    <span class="input-group-text">Avatar</span>
+                </div>
+                <input type="file" Class="form-control" asp-for="AvatarId" />
+            </div>
+
+
 
             <div class="form-group">
                 <br />
