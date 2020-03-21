@@ -10,5 +10,6 @@
         public string LinkedInUsername { get; set; }
         public string TelegramUsername { get; set; }
         public string AvatarId { get; set; }
+        public string GoodReadsWidget { get; set; }
     }
 }

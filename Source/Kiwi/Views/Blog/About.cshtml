@@ -4,24 +4,25 @@
     ViewData["Title"] = "About";
 }
 
-<div id="about" class="container">
-    <img class="rounded-circle" src="@Model.AvatarId" width="200" height="200" />
-    <br />
+    <div id="about" class="container">
+        <img class="rounded-circle" src="@Model.AvatarId" width="200" height="200" />
+        <br />
 
-    <p>
         <h5 align="justify">
             @Html.Raw(Model.About)
         </h5>
-    </p>
-    <br />
 
-    <div class="rowFlex">
-        <a href="https://github.com/@Model.GithubUsername"><i class="fab fa-github fa-2x"></i></a>
-        <a href="https://twitter.com/@Model.TwitterUsername"><i class="fab fa-twitter fa-2x"></i></a>
-        <a href="https://linkedin.com/in/@Model.LinkedInUsername"><i class="fab fa-linkedin fa-2x"></i></a>
-        <a href="https://t.me/@Model.TelegramUsername"><i class="fab fa-telegram fa-2x"></i></a>
+        <br />
+
+        @Html.Raw(Model.GoodReadsWidget)
+
+        <div class="rowFlex">
+            <a href="https://github.com/@Model.GithubUsername"><i class="fab fa-github fa-2x"></i></a>
+            <a href="https://twitter.com/@Model.TwitterUsername"><i class="fab fa-twitter fa-2x"></i></a>
+            <a href="https://linkedin.com/in/@Model.LinkedInUsername"><i class="fab fa-linkedin fa-2x"></i></a>
+            <a href="https://t.me/@Model.TelegramUsername"><i class="fab fa-telegram fa-2x"></i></a>
+        </div>
     </div>
-</div>
 
 @section Scripts
     {
