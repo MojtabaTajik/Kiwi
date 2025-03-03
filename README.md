@@ -23,6 +23,3 @@ Below is the default credentials of Kiwi, you can change it in the admin panel w
 
 Username: Kiwi  
 Password: K!w!Bl0g
-
-Currently my blog ([mojtaba.me](https://mojtaba.me)) act as a live demo of Kiwi ;)
-Enjoy and if you can help to improve Kiwi.
